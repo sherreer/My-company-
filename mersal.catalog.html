@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+	<meta charset="UTF-8">
+	<title>منصة مرسال للطلبات</title>
+<style>
+body { font-family: Tahoma, Arial, sans-serif; background: #fdfdfd; margin:0; padding:0; }
+header { background: #c62828; color:white; text-align:center; padding:15px; font-size:24px; font-weight:bold; }
+.section { border-bottom:1px solid #ddd; }
+.section h2 { margin:0; background:#eee; padding:10px; cursor:pointer; font-size:20px; }
+.items { max-height:2000px; overflow:hidden; transition:max-height 0.3s ease; }
+.items.open { max-height:0; }
+.item { display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px dashed #ccc; }
+.item span { font-size:16px; }
+.item button { background:#4caf50; color:white; border:none; padding:5px 10px; border-radius:5px; cursor:pointer; }
+.cart-button { position:fixed; bottom:20px; left:20px; background:#ff9800; color:white; border:none; padding:15px; border-radius:50%; font-size:20px; cursor:pointer; box-shadow:0 4px 6px rgba(0,0,0,0.2); }
+#cartModal { display:none; position:fixed; bottom:80px; left:20px; background:white; border:1px solid #ccc; padding:15px; border-radius:10px; width:300px; max-height:400px; overflow-y:auto; box-shadow:0 4px 8px rgba(0,0,0,0.3); }
+#cartItems div { display:flex; justify-content:space-between; margin-bottom:5px; }
+#confirmOrder { background:#c62828; color:white; border:none; width:100%; padding:10px; border-radius:5px; cursor:pointer; margin-top:10px; }
+</style>
+  </head>
+  <body>
+	<header>منصة مرسال للطلبات</header>
+
+	<!-- 🍴 المطاعم -->
+	<div class="section">
+	  <h2>🍴 المطاعم</h2>
+	  <div class="items">
+		<!-- 🥙 الشاورما -->
+		<div class="item"><span>شاورما عادي 🌯 - 70 ليرة</span><button onclick="addToCart('شاورما عادي 🌯',70)">إضافة للسلة</button></div>
+		<div class="item"><span>شاورما دبل 🌯🌯 - 90 ليرة</span><button onclick="addToCart('شاورما دبل 🌯🌯',90)">إضافة للسلة</button></div>
+		<div class="item"><span>شاورما عربي 🥙 - 110 ليرة</span><button onclick="addToCart('شاورما عربي 🥙',110)">إضافة للسلة</button></div>
+		<div class="item"><span>شاورما خراطيش 🌯🔥 - 380 ليرة</span><button onclick="addToCart('شاورما خراطيش 🌯🔥',380)">إضافة للسلة</button></div>
+		<div class="item"><span>كيلو شاورما فرط ⚖️ - 430 ليرة</span><button onclick="addToCart('كيلو شاورما فرط ⚖️',430)">إضافة للسلة</button></div>
+
+		<!-- 🍗 الدجاج والوجبات -->
+		<div class="item"><span>كرسبي عادي/دبل/وجبة/كيلو فرط 🍗 - 70/90/110/430</span><button onclick="addToCart('كرسبي عادي/دبل/وجبة/كيلو فرط 🍗',430)">إضافة للسلة</button></div>
+		<div class="item"><span>سودة دجاج 🍗 - 70/90/110/430</span><button onclick="addToCart('سودة دجاج 🍗',430)">إضافة للسلة</button></div>
+		<div class="item"><span>فاهيتا 🌯 - 70/90/110/430</span><button onclick="addToCart('فاهيتا 🌯',430)">إضافة للسلة</button></div>
+		<div class="item"><span>مكسيكانو 🌯🔥 - 70/90/110/430</span><button onclick="addToCart('مكسيكانو 🌯🔥',430)">إضافة للسلة</button></div>
+		<div class="item"><span>سبايسي 🌶️ - 70/90/110/430</span><button onclick="addToCart('سبايسي 🌶️',430)">إضافة للسلة</button></div>
+		<div class="item"><span>سكالوب 🍗 - 70/90/110/430</span><button onclick="addToCart('سكالوب 🍗',430)">إضافة للسلة</button></div>
+		<div class="item"><span>برغر دجاج 🍔 - 85</span><button onclick="addToCart('برغر دجاج 🍔',85)">إضافة للسلة</button></div>
+		<div class="item"><span>برغر غنم 🍔 - 95</span><button onclick="addToCart('برغر غنم 🍔',95)">إضافة للسلة</button></div>
+		<div class="item"><span>سجق 🌭 - 110</span><button onclick="addToCart('سجق 🌭',110)">إضافة للسلة</button></div>
+
+		<!-- 🍚 المندي -->
+		<div class="item"><span>وجبة مندي دجاج 🍗 - 110</span><button onclick="addToCart('وجبة مندي دجاج 🍗',110)">إضافة للسلة</button></div>
+		<div class="item"><span>منسف مندي جميع المقاسات ⚖️ - 110</span><button onclick="addToCart('منسف مندي جميع المقاسات ⚖️',110)">إضافة للسلة</button></div>
+		<div class="item"><span>فروج مشوي 🍗 - 310</span><button onclick="addToCart('فروج مشوي 🍗',310)">إضافة للسلة</button></div>
+		<div class="item"><span>فروج بروستد 🍗 - 350</span><button onclick="addToCart('فروج بروستد 🍗',350)">إضافة للسلة</button></div>
+
+		<!-- 🍟 البطاطا -->
+		<div class="item"><span>بطاطا عادي 🍟 - 40</span><button onclick="addToCart('بطاطا عادي 🍟',40)">إضافة للسلة</button></div>
+		<div class="item"><span>بطاطا دبل 🍟🍟 - 50</span><button onclick="addToCart('بطاطا دبل 🍟🍟',50)">إضافة للسلة</button></div>
+		<div class="item"><span>بطاطا صحن صغير 🥣 - 60</span><button onclick="addToCart('بطاطا صحن صغير 🥣',60)">إضافة للسلة</button></div>
+		<div class="item"><span>بطاطا صحن وسط 🥗 - 80</span><button onclick="addToCart('بطاطا صحن وسط 🥗',80)">إضافة للسلة</button></div>
+		<div class="item"><span>بطاطا صحن كبير 🥣🍟 - 110</span><button onclick="addToCart('بطاطا صحن كبير 🥣🍟',110)">إضافة للسلة</button></div>
+
+		<!-- 🥤 المشروبات -->
+		<div class="item"><span>لبن 🥛 - 15</span><button onclick="addToCart('لبن 🥛',15)">إضافة للسلة</button></div>
+		<div class="item"><span>ببسي صغير 🥤 - 25</span><button onclick="addToCart('ببسي صغير 🥤',25)">إضافة للسلة</button></div>
+		<div class="item"><span>ببسي كبير 🥤 - 70</span><button onclick="addToCart('ببسي كبير 🥤',70)">إضافة للسلة</button></div>
+
+	  </div>
+	</div>
+
+	<!-- 🥖 أفران وفطائر -->
+	<div class="section">
+	  <h2>🥖 أفران وفطائر</h2>
+	  <div class="items">
+
+		<!-- 🧆 مناقيش -->
+		<div class="item"><span>جبنة - 12.5 ليرة</span><button onclick="addToCart('جبنة',12.5)">إضافة للسلة</button></div>
+		<div class="item"><span>جبنة مطبق - 12.5 ليرة</span><button onclick="addToCart('جبنة مطبق',12.5)">إضافة للسلة</button></div>
+		<div class="item"><span>جبنة مع حر - 12.5 ليرة</span><button onclick="addToCart('جبنة مع حر',12.5)">إضافة للسلة</button></div>
+		<div class="item"><span>خضرة - 12.5 ليرة</span><button onclick="addToCart('خضرة',12.5)">إضافة للسلة</button></div>
+		<div class="item"><span>قريشة - 12.5 ليرة</span><button onclick="addToCart('قريشة',12.5)">إضافة للسلة</button></div>
+		<div class="item"><span>كوكتيل زعتر - 12.5 ليرة</span><button onclick="addToCart('كوكتيل زعتر',12.5)">إضافة للسلة</button></div>
+		<div class="item"><span>كوكتيل محمرة - 12.5 ليرة</span><button onclick="addToCart('كوكتيل محمرة',12.5)">إضافة للسلة</button></div>
+		<div class="item"><span>كوكتيل خضرة - 12.5 ليرة</span><button onclick="addToCart('كوكتيل خضرة',12.5)">إضافة للسلة</button></div>
+		<div class="item"><span>جبنة مع أشقوان - 25 ليرة</span><button onclick="addToCart('جبنة مع أشقوان',25)">إضافة للسلة</button></div>
+
+		<!-- 🍕 بيتزا مع سجق -->
+		<div class="item"><span>زعتر - 12.5 ليرة</span><button onclick="addToCart('بيتزا مع سجق زعتر',12.5)">إضافة للسلة</button></div>
+		<div class="item"><span>محمرة - 12.5 ليرة</span><button onclick="addToCart('بيتزا مع سجق محمرة',12.5)">إضافة للسلة</button></div>
+
+		<!-- 🍕 بيتزا -->
+		<div class="item"><span>صغير - 70 ليرة</span><button onclick="addToCart('بيتزا صغير',70)">إضافة للسلة</button></div>
+		<div class="item"><span>وسط - 150 ليرة</span><button onclick="addToCart('بيتزا وسط',150)">إضافة للسلة</button></div>
+		<div class="item"><span>عالي - 170 ليرة</span><button onclick="addToCart('بيتزا عالي',170)">إضافة للسلة</button></div>
+		<div class="item"><span>مع مارتدلا - 170 ليرة</span><button onclick="addToCart('بيتزا مع مارتدلا',170)">إضافة للسلة</button></div>
+		<div class="item"><span>طاووق - 170 ليرة</span><button onclick="addToCart('بيتزا طاووق',170)">إضافة للسلة</button></div>
+
+		<!-- 🍗 لحمة -->
+		<div class="item"><span>لحم بعجين - 12.5 ليرة</span><button onclick="addToCart('لحم بعجين',12.5)">إضافة للسلة</button></div>
+		<div class="item"><span>سجق مع جبنة - 50 ليرة</span><button onclick="addToCart('سجق مع جبنة',50)">إضافة للسلة</button></div>
+		<div class="item"><span>سجق عادي - 25 ليرة</span><button onclick="addToCart('سجق عادي',25)">إضافة للسلة</button></div>
+		<div class="item"><span>سودة مع جبنة - 60 ليرة</span><button onclick="addToCart('سودة مع جبنة',60)">إضافة للسلة</button></div>
+		<div class="item"><span>سودة عادي - 30 ليرة</span><button onclick="addToCart('سودة عادي',30)">إضافة للسلة</button></div>
+		<div class="item"><span>فهيتا مع جبنة - 60 ليرة</span><button onclick="addToCart('فهيتا مع جبنة',60)">إضافة للسلة</button></div>
+		<div class="item"><span>فهيتا عادي - 30 ليرة</span><button onclick="addToCart('فهيتا عادي',30)">إضافة للسلة</button></div>
+
+	  </div>
+	</div>
+	<!-- 🍰 معجنات وحلويات -->
+	<div class="section">
+	  <h2>🍰 معجنات وحلويات</h2>
+	  <div class="items">
+
+		<div class="item"><span>قطعة كاتو صغيرة - 20 ليرة</span><button onclick="addToCart('قطعة كاتو صغيرة',20)">إضافة للسلة</button></div>
+		<div class="item"><span>قطعة كاتو كبيرة - 25 ليرة</span><button onclick="addToCart('قطعة كاتو كبيرة',25)">إضافة للسلة</button></div>
+		<div class="item"><span>فطيرة قشطة - 30 ليرة</span><button onclick="addToCart('فطيرة قشطة',30)">إضافة للسلة</button></div>
+		<div class="item"><span>حلاوة جبن - 100 ليرة</span><button onclick="addToCart('حلاوة جبن',100)">إضافة للسلة</button></div>
+		<div class="item"><span>كاتو منزلى - 110 ليرة</span><button onclick="addToCart('كاتو منزلى',110)">إضافة للسلة</button></div>
+		<div class="item"><span>أصابع عجوة بسمسم 1 كغ - 110 ليرة</span><button onclick="addToCart('أصابع عجوة بسمسم 1 كغ',110)">إضافة للسلة</button></div>
+		<div class="item"><span>بيتفور 1 كغ - 70 ليرة</span><button onclick="addToCart('بيتفور 1 كغ',70)">إضافة للسلة</button></div>
+		<div class="item"><span>معمول عجوة 1 كغ - 110 ليرة</span><button onclick="addToCart('معمول عجوة 1 كغ',110)">إضافة للسلة</button></div>
+		<div class="item"><span>برازق 850 غ - 120 ليرة</span><button onclick="addToCart('برازق 850 غ',120)">إضافة للسلة</button></div>
+		<div class="item"><span>كاتو مدور وسط - 170 ليرة</span><button onclick="addToCart('كاتو مدور وسط',170)">إضافة للسلة</button></div>
+		<div class="item"><span>كاتو مدور كبير - 230 ليرة</span><button onclick="addToCart('كاتو مدور كبير',230)">إضافة للسلة</button></div>
+		<div class="item"><span>تمرية بالمكسرات - 450 ليرة</span><button onclick="addToCart('تمرية بالمكسرات',450)">إضافة للسلة</button></div>
+		<div class="item"><span>مشكل عبيد نباتي - 150 ليرة</span><button onclick="addToCart('مشكل عبيد نباتي',150)">إضافة للسلة</button></div>
+		<div class="item"><span>عش البلبل عبيد - 170 ليرة</span><button onclick="addToCart('عش البلبل عبيد',170)">إضافة للسلة</button></div>
+		<div class="item"><span>هريسة حلبي - 230 ليرة</span><button onclick="addToCart('هريسة حلبي',230)">إضافة للسلة</button></div>
+		<div class="item"><span>هريسة مكسرات - 200 ليرة</span><button onclick="addToCart('هريسة مكسرات',200)">إضافة للسلة</button></div>
+		<div class="item"><span>نمورة سادة - 100 ليرة</span><button onclick="addToCart('نمورة سادة',100)">إضافة للسلة</button></div>
+		<div class="item"><span>ميديا قريشة - 280 ليرة</span><button onclick="addToCart('ميديا قريشة',280)">إضافة للسلة</button></div>
+		<div class="item"><span>بقلاوة بالقريشة - 150 ليرة</span><button onclick="addToCart('بقلاوة بالقريشة',150)">إضافة للسلة</button></div>
+		<div class="item"><span>برك جوز - 170 ليرة</span><button onclick="addToCart('برك جوز',170)">إضافة للسلة</button></div>
+		<div class="item"><span>عصملية - 900 ليرة</span><button onclick="addToCart('عصملية',900)">إضافة للسلة</button></div>
+		<div class="item"><span>مشكل اكسترا حلبى - 800 ليرة</span><button onclick="addToCart('مشكل اكسترا حلبى',800)">إضافة للسلة</button></div>
+		<div class="item"><span>مشكل اكسترا حلبى كاجو - 750 ليرة</span><button onclick="addToCart('مشكل اكسترا حلبى كاجو',750)">إضافة للسلة</button></div>
+
+	  </div>
+	</div>
+	<!-- 🔥 مشاوي -->
+	<div class="section">
+	  <h2>🔥 مشاوي</h2>
+	  <div class="items">
+
+		<div class="item"><span>كيلو كباب غنم - 650 ليرة</span><button onclick="addToCart('كيلو كباب غنم',650)">إضافة للسلة</button></div>
+		<div class="item"><span>كيلو كباب دجاج - 450 ليرة</span><button onclick="addToCart('كيلو كباب دجاج',450)">إضافة للسلة</button></div>
+		<div class="item"><span>كيلو سودة - 550 ليرة</span><button onclick="addToCart('كيلو سودة',550)">إضافة للسلة</button></div>
+		<div class="item"><span>شيش مع دهن غنم - 420 ليرة</span><button onclick="addToCart('شيش مع دهن غنم',420)">إضافة للسلة</button></div>
+		<div class="item"><span>جوانح - 300 ليرة</span><button onclick="addToCart('جوانح',300)">إضافة للسلة</button></div>
+		<div class="item"><span>شقف غنم - 700 ليرة</span><button onclick="addToCart('شقف غنم',700)">إضافة للسلة</button></div>
+		<div class="item"><span>كباب باذنجان - 700 ليرة</span><button onclick="addToCart('كباب باذنجان',700)">إضافة للسلة</button></div>
+
+	  </div>
+	</div>
+
+	<!-- 🥩 لحوم -->
+	<div class="section">
+	  <h2>🥩 لحوم</h2>
+	  <div class="items">
+
+		<div class="item"><span>كيلو لحم خروف - 480 ليرة</span><button onclick="addToCart('كيلو لحم خروف',480)">إضافة للسلة</button></div>
+		<div class="item"><span>كيلو لحم بعظم - 370 ليرة</span><button onclick="addToCart('كيلو لحم بعظم',370)">إضافة للسلة</button></div>
+		<div class="item"><span>كيلو صدور دجاج - 180 ليرة</span><button onclick="addToCart('كيلو صدور دجاج',180)">إضافة للسلة</button></div>
+		<div class="item"><span>كيلو دجاج - 150 ليرة</span><button onclick="addToCart('كيلو دجاج',150)">إضافة للسلة</button></div>
+
+	  </div>
+	</div>
+
+	<!-- زر السلة -->
+	<button class="cart-button" onclick="toggleCart()">🛒</button>
+
+	<div id="cartModal">
+	  <h3>سلة الطلبات</h3>
+	  <div id="cartItems"></div>
+	  <button id="confirmOrder" onclick="confirmOrder()">تأكيد الطلب</button>
+	</div>
+
+<script>
+let cart = [];
+function addToCart(name, price){ cart.push({name,price}); renderCart(); }
+function renderCart(){ 
+  const cartDiv=document.getElementById('cartItems'); 
+  cartDiv.innerHTML=''; 
+  cart.forEach((item,index)=>{
+    const div=document.createElement('div'); 
+    div.innerHTML=`<span>${item.name} - ${item.price} ليرة</span> <button onclick="removeItem(${index})">حذف</button>`; 
+    cartDiv.appendChild(div); 
+  }); 
+}
+function removeItem(index){ cart.splice(index,1); renderCart(); }
+function toggleCart(){ 
+  const modal=document.getElementById('cartModal'); 
+  modal.style.display=modal.style.display==='block'?'none':'block'; 
+}
+function confirmOrder(){ 
+  if(cart.length===0){ alert('السلة فارغة'); return; } 
+  let message='طلباتي:\n'; 
+  cart.forEach(item=>{ message+=`${item.name} - ${item.price} ليرة\n`; }); 
+  window.open(`https://wa.me/963983926067?text=${encodeURIComponent(message)}`,'_blank'); 
+}
+
+// الطي عند النقر على الأقسام
+document.querySelectorAll('.section h2').forEach(h2=>{
+  h2.addEventListener('click',()=>{
+    const itemsDiv=h2.nextElementSibling; 
+    if(itemsDiv && itemsDiv.classList.contains('items')){
+      itemsDiv.classList.toggle('open'); 
+    } 
+  });
+});
+</script>
+  </body>
+</html>
